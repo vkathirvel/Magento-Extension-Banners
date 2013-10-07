@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+* @package    Optimiseweb_Banners
+* @author     Kathir Vel (sid@optimiseweb.co.uk)
+* @copyright  Copyright (c) 2013 Optimise Web Limited
+* @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+*/
+-->
+<config>
+
+    <modules>
+        <Optimiseweb_Banners>
+            <version>0.1.9</version>
+        </Optimiseweb_Banners>
+    </modules>
+
+    <admin>
+        <routers>
+            <banners>
+                <use>admin</use>
+                <args>
+                    <module>Optimiseweb_Banners</module>
+                    <frontName>banners</frontName>
+                </args>
+            </banners>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <menu>
+            <optimiseweball translate="title" module="banners">
+                <title>Optimise Web</title>
+                <sort_order>71</sort_order>
+                <children>
+                    <banners translate="title" module="banners">
+                        <title>Banners</title>
+                        <sort_order>1</sort_order>
+                        <action>banners/adminhtml_banners</action>
+                    </banners>
+                </children>
+            </optimiseweball>
+        </menu>
+    </adminhtml>
+
+    <global>
+
+        <blocks>
+            <banners>
+                <class>Optimiseweb_Banners_Block</class>
+            </banners>
+        </blocks>
+
+        <helpers>
+            <banners>
+                <class>Optimiseweb_Banners_Helper</class>
+            </banners>
+        </helpers>
+
+        <models>
+            <banners>
+                <class>Optimiseweb_Banners_Model</class>
+                <deprecatedNode>banners_mysql4</deprecatedNode>
+                <resourceModel>banners_resource</resourceModel>
+            </banners>
+            <banners_resource>
+                <class>Optimiseweb_Banners_Model_Resource</class>
+                <entities>
+                    <banners>
+                        <table>banners</table>
+                    </banners>
+                </entities>
+            </banners_resource>
+        </models>
+
+        <resources>
+            <banners_setup>
+                <setup>
+                    <module>Optimiseweb_Banners</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </banners_setup>
+            <banners_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </banners_write>
+            <banners_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </banners_read>
+        </resources>
+
+    </global>
+
+</config>
