@@ -85,6 +85,13 @@ class Optimiseweb_Banners_Block_Adminhtml_Banners_Edit_Tab_Main extends Mage_Adm
             'name' => 'image',
         ));
 
+        $fieldset->addField('image_retina', 'image', array(
+                'label' => Mage::helper('banners')->__('Image for Retina Display'),
+                'title' => Mage::helper('banners')->__('Image for Retina Display'),
+                'required' => false,
+                'name' => 'image_retina',
+        ));
+
         $fieldset->addField('alt', 'text', array(
             'label' => Mage::helper('banners')->__('Image Alt Tag'),
             'title' => Mage::helper('banners')->__('Image Alt Tag'),

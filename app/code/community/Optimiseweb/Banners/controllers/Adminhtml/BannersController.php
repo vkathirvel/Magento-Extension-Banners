@@ -8,12 +8,14 @@
  * @copyright   Copyright (c) 2013 Optimise Web Limited
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Controller_Action {
+class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Controller_Action
+{
 
     /**
      * Init ACtion
      */
-    protected function _initAction() {
+    protected function _initAction()
+    {
         $this->loadLayout();
         $this->_setActiveMenu('optimiseweball/banners');
         $this->_addBreadcrumb(Mage::helper('adminhtml')->__('Banner Manager'), Mage::helper('adminhtml')->__('Banner Manager'));
@@ -23,7 +25,8 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
     /**
      * Index Action
      */
-    public function indexAction() {
+    public function indexAction()
+    {
         $this->_initAction();
         $block = $this->getLayout()->createBlock('banners/adminhtml_banners', 'banners');
         $this->getLayout()->getBlock('content')->append($block);
@@ -33,7 +36,8 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
     /**
      * Edit Action
      */
-    public function editAction() {
+    public function editAction()
+    {
         $id = $this->getRequest()->getParam('id');
 
         $model = Mage::getModel('banners/banners')->load($id);
@@ -62,20 +66,22 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
     /**
      * New Action
      */
-    public function newAction() {
+    public function newAction()
+    {
         $this->_forward('edit');
     }
 
     /**
      * Save Action
      */
-    public function saveAction() {
+    public function saveAction()
+    {
         if ($data = $this->getRequest()->getPost()) {
 
             $model = Mage::getModel('banners/banners');
 
             /* Store Ids */
-            if (!isset($data['store_ids'])) {
+            if (!isset($data['store_ids']) OR in_array('0', $data['store_ids'])) {
                 $data['store_ids'] = array('0');
             }
             $data['store_ids'] = implode(',', $data['store_ids']);
@@ -85,7 +91,7 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
             $media_sub_folder = 'optimiseweb/banners' . DS;
             $final_media_path = $media_path . $media_sub_folder;
 
-            $images = array('image');
+            $images = array('image', 'image_retina');
             $uploader = '';
             $upload = '';
 
@@ -114,15 +120,21 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
                 }
                 $model->setData($image, $data[$image]);
             }
+
             /* Dates */
-            if ($data['start_date'] != NULL) {
+            if ($data['start_date'] == '') {
+                $data['start_date'] = NULL;
+            } else {
                 $date = Mage::app()->getLocale()->date($data['start_date'], Zend_Date::DATE_SHORT);
                 $data['start_date'] = $date->toString('YYYY-MM-dd');
             }
-            if ($data['end_date'] != NULL) {
+            if ($data['end_date'] == '') {
+                $data['end_date'] = NULL;
+            } else {
                 $date1 = Mage::app()->getLocale()->date($data['end_date'], Zend_Date::DATE_SHORT);
                 $data['end_date'] = $date1->toString('YYYY-MM-dd');
             }
+
             /* Save into the model */
             $model->setData($data)->setId($this->getRequest()->getParam('id'));
 
@@ -158,7 +170,8 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
     /**
      * Delete Action
      */
-    public function deleteAction() {
+    public function deleteAction()
+    {
         if ($this->getRequest()->getParam('id') > 0) {
             try {
                 $model = Mage::getModel('banners/banners');
@@ -168,7 +181,7 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
                 $model = Mage::getModel('banners/banners')->load($id);
                 if ($model->getId() || $id == 0) {
                     $media_path = Mage::getBaseDir('media') . DS;
-                    $images = array('image');
+                    $images = array('image', 'image_retina');
                     foreach ($images as $image) {
                         unlink($media_path . $model->getData($image));
                     }
@@ -189,7 +202,8 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
     /**
      * Mass Delete Action
      */
-    public function massDeleteAction() {
+    public function massDeleteAction()
+    {
         $bannersIds = $this->getRequest()->getParam('banners');
         if (!is_array($bannersIds)) {
             Mage::getSingleton('adminhtml/session')->addError(Mage::helper('adminhtml')->__('Please select Banner(s)'));
@@ -201,7 +215,7 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
                     /* Delete Images & Files */
                     if ($banners->getId()) {
                         $media_path = Mage::getBaseDir('media') . DS;
-                        $images = array('image');
+                        $images = array('image', 'image_retina');
                         foreach ($images as $image) {
                             unlink($media_path . $banners->getData($image));
                         }
@@ -220,7 +234,8 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
     /**
      * Mass Status Action
      */
-    public function massStatusAction() {
+    public function massStatusAction()
+    {
         $bannersIds = $this->getRequest()->getParam('banners');
         if (!is_array($bannersIds)) {
             Mage::getSingleton('adminhtml/session')->addError($this->__('Please select Banner(s)'));
@@ -228,13 +243,13 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
             try {
                 foreach ($bannersIds as $bannersId) {
                     $banners = Mage::getSingleton('banners/banners')
-                            ->load($bannersId)
-                            ->setStatus($this->getRequest()->getParam('status'))
-                            ->setIsMassupdate(true)
-                            ->save();
+                        ->load($bannersId)
+                        ->setStatus($this->getRequest()->getParam('status'))
+                        ->setIsMassupdate(true)
+                        ->save();
                 }
                 $this->_getSession()->addSuccess(
-                        $this->__('Total of %d record(s) were successfully updated', count($bannersIds))
+                    $this->__('Total of %d record(s) were successfully updated', count($bannersIds))
                 );
             } catch (Exception $e) {
                 $this->_getSession()->addError($e->getMessage());
@@ -246,7 +261,8 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
     /**
      * Export CSV
      */
-    public function exportCsvAction() {
+    public function exportCsvAction()
+    {
         $fileName = 'banners.csv';
         $content = $this->getLayout()->createBlock('banners/adminhtml_banners_grid')->getCsv();
         $this->_sendUploadResponse($fileName, $content);
@@ -255,7 +271,8 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
     /**
      * Export XML
      */
-    public function exportXmlAction() {
+    public function exportXmlAction()
+    {
         $fileName = 'banners.xml';
         $content = $this->getLayout()->createBlock('banners/adminhtml_banners_grid')->getXml();
         $this->_sendUploadResponse($fileName, $content);
@@ -264,7 +281,8 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
     /**
      * Send Upload Response
      */
-    protected function _sendUploadResponse($fileName, $content, $contentType = 'application/octet-stream') {
+    protected function _sendUploadResponse($fileName, $content, $contentType = 'application/octet-stream')
+    {
         $response = $this->getResponse();
         $response->setHeader('HTTP/1.1 200 OK', '');
         $response->setHeader('Pragma', 'public', true);

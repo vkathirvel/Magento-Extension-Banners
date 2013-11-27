@@ -8,7 +8,19 @@
  * @copyright   Copyright (c) 2013 Optimise Web Limited
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
+class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract
+{
+
+    /**
+     * Get config
+     *
+     * @param type $field
+     * @return type
+     */
+    public function getConfig($field)
+    {
+        return Mage::getStoreConfig('optimisewebbanners/' . $field);
+    }
 
     /**
      * Returns the Banners as an array
@@ -16,11 +28,12 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
      * @param type $identifier
      * @return boolean
      */
-    public function getBanners($identifier) {
+    public function getBanners($identifier)
+    {
         $banners = Mage::getModel('banners/banners')->getCollection()
-                ->addFieldToFilter('status', '1')
-                ->addFieldToFilter('identifier', $identifier)
-                ->addOrder('banner_order', 'asc');
+            ->addFieldToFilter('status', '1')
+            ->addFieldToFilter('identifier', $identifier)
+            ->addOrder('banner_order', 'asc');
         $bannerArray = array();
         $x = 0;
         foreach ($banners as $banner) {
@@ -28,6 +41,8 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
                 $bannerArray[$x] = $banner->getData();
                 if ($banner->getData('image'))
                     $bannerArray[$x]['image'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $banner->getData('image');
+                if ($banner->getData('image_retina'))
+                    $bannerArray[$x]['image_retina'] = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $banner->getData('image_retina');
                 if ($banner->getData('url'))
                     $bannerArray[$x]['url'] = $this->_destinationUrlCheck($banner->getData('url'));
                 if ($banner->getData('title'))
@@ -51,7 +66,8 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
      * @param type $endDate
      * @return boolean
      */
-    public function _checkDateRange($startDate, $endDate) {
+    public function _checkDateRange($startDate, $endDate)
+    {
         if ($startDate) {
             
         } else {
@@ -80,7 +96,8 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
      * @param type $storeIds
      * @return boolean
      */
-    protected function _filterStore($storeIds) {
+    protected function _filterStore($storeIds)
+    {
         $storeIdData = explode(',', $storeIds);
 
         if (in_array('0', $storeIdData) OR in_array(Mage::app()->getStore()->getId(), $storeIdData)) {
@@ -95,7 +112,8 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
      * @param string $url
      * @return string
      */
-    protected function _destinationUrlCheck($url) {
+    protected function _destinationUrlCheck($url)
+    {
         $count = 0;
         $protocols = array('http://', 'https://', 'ftp://', 'mailto:');
         foreach ($protocols as $protocol) {
@@ -117,7 +135,8 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
      *
      * @return type
      */
-    public function getBannerGroupsAsOptionsArray() {
+    public function getBannerGroupsAsOptionsArray()
+    {
         $banners = Mage::getModel('banners/banners')->getCollection();
         $bannerGroups = array();
         foreach ($banners as $banner) {
@@ -140,7 +159,8 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
      * @param type $contentClass
      * @return string|boolean
      */
-    public function getGenericDivHtml($identifier, $containerID = NULL, $containerClass = NULL, $itemClass = NULL, $imageClass = NULL, $linkClass = NULL, $imageLinkContainerClass = NULL, $headingClass = NULL, $contentClass = NULL) {
+    public function getGenericDivHtml($identifier, $containerID = NULL, $containerClass = NULL, $itemClass = NULL, $imageClass = NULL, $linkClass = NULL, $imageLinkContainerClass = NULL, $headingClass = NULL, $contentClass = NULL)
+    {
         $banners = $this->getBanners($identifier);
         if ($banners) {
             /* Start HTML */
@@ -203,6 +223,13 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
                 }
                 /* IMG Image */
                 $html .= '<img src="' . $banner['image'] . '"';
+                if ($banner['image_retina'] AND $this->getConfig('retina/enabled')) {
+                    $dataAttribute = 'data-at2x';
+                    if ($this->getConfig('retina/dataattribute')) {
+                        $dataAttribute = $this->getConfig('retina/dataattribute');
+                    }
+                    $html .= ' ' . $dataAttribute . '="' . $banner['image_retina'] . '"';
+                }
                 if ($banner['alt']) {
                     $html .= ' alt="' . $banner['alt'] . '"';
                 }
@@ -239,7 +266,8 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
      * @param type $containerClass
      * @return string|boolean
      */
-    public function getSlideJsHtml($identifier, $containerId = NULL, $containerClass = NULL) {
+    public function getSlideJsHtml($identifier, $containerId = NULL, $containerClass = NULL)
+    {
         $banners = $this->getBanners($identifier);
         if ($banners) {
             if (empty($containerId))
@@ -270,6 +298,13 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
                     $html .= '>';
                 }
                 $html .= '<img src="' . $banner['image'] . '"';
+                if ($banner['image_retina'] AND $this->getConfig('retina/enabled')) {
+                    $dataAttribute = 'data-at2x';
+                    if ($this->getConfig('retina/dataattribute')) {
+                        $dataAttribute = $this->getConfig('retina/dataattribute');
+                    }
+                    $html .= ' ' . $dataAttribute . '="' . $banner['image_retina'] . '"';
+                }
                 if ($banner['alt']) {
                     $html .= ' alt="' . $banner['alt'] . '"';
                 }
@@ -297,7 +332,8 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
      * @param type $liClass
      * @return string|boolean
      */
-    public function getJcarouselHtml($identifier, $containerId = NULL, $containerClass = NULL, $liClass = NULL) {
+    public function getJcarouselHtml($identifier, $containerId = NULL, $containerClass = NULL, $liClass = NULL)
+    {
         $banners = $this->getBanners($identifier);
         if ($banners) {
             if (empty($containerId))
@@ -329,6 +365,13 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
                     $html .= '>';
                 }
                 $html .= '<img src="' . $banner['image'] . '"';
+                if ($banner['image_retina'] AND $this->getConfig('retina/enabled')) {
+                    $dataAttribute = 'data-at2x';
+                    if ($this->getConfig('retina/dataattribute')) {
+                        $dataAttribute = $this->getConfig('retina/dataattribute');
+                    }
+                    $html .= ' ' . $dataAttribute . '="' . $banner['image_retina'] . '"';
+                }
                 if ($banner['alt']) {
                     $html .= ' alt="' . $banner['alt'] . '"';
                 }
@@ -353,7 +396,8 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
      * @param string $containerClass
      * @return string|boolean
      */
-    public function getFlexSliderHtml($identifier, $containerClass = NULL) {
+    public function getFlexSliderHtml($identifier, $containerClass = NULL)
+    {
         $banners = $this->getBanners($identifier);
         if ($banners) {
             if (empty($containerClass))
@@ -382,6 +426,13 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
                     $html .= '>';
                 }
                 $html .= '<img src="' . $banner['image'] . '"';
+                if ($banner['image_retina'] AND $this->getConfig('retina/enabled')) {
+                    $dataAttribute = 'data-at2x';
+                    if ($this->getConfig('retina/dataattribute')) {
+                        $dataAttribute = $this->getConfig('retina/dataattribute');
+                    }
+                    $html .= ' ' . $dataAttribute . '="' . $banner['image_retina'] . '"';
+                }
                 if ($banner['alt']) {
                     $html .= ' alt="' . $banner['alt'] . '"';
                 }
@@ -407,7 +458,8 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
      * @param string $containerClass
      * @return string|boolean
      */
-    public function getBxSliderHtml($identifier, $sliderClass = NULL, $containerClass = NULL) {
+    public function getBxSliderHtml($identifier, $sliderClass = NULL, $containerClass = NULL)
+    {
         $banners = $this->getBanners($identifier);
         if ($banners) {
             if ($containerClass == NULL)
@@ -438,6 +490,13 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract {
                     $html .= '>';
                 }
                 $html .= '<img src="' . $banner['image'] . '"';
+                if ($banner['image_retina'] AND $this->getConfig('retina/enabled')) {
+                    $dataAttribute = 'data-at2x';
+                    if ($this->getConfig('retina/dataattribute')) {
+                        $dataAttribute = $this->getConfig('retina/dataattribute');
+                    }
+                    $html .= ' ' . $dataAttribute . '="' . $banner['image_retina'] . '"';
+                }
                 if ($banner['alt']) {
                     $html .= ' alt="' . $banner['alt'] . '"';
                 }
