@@ -5,15 +5,17 @@
  *
  * @package     Optimiseweb_Banners
  * @author      Kathir Vel (sid@optimiseweb.co.uk)
- * @copyright   Copyright (c) 2013 Optimise Web Limited
+ * @copyright   Copyright (c) 2014 Optimise Web
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
-class Optimiseweb_Banners_Block_Adminhtml_Banners_Edit extends Mage_Adminhtml_Block_Widget_Form_Container {
+class Optimiseweb_Banners_Block_Adminhtml_Banners_Edit extends Mage_Adminhtml_Block_Widget_Form_Container
+{
 
     /**
      *
      */
-    public function __construct() {
+    public function __construct()
+    {
         parent::__construct();
 
         $this->_objectId = 'id';
@@ -24,10 +26,10 @@ class Optimiseweb_Banners_Block_Adminhtml_Banners_Edit extends Mage_Adminhtml_Bl
         $this->_updateButton('delete', 'label', Mage::helper('banners')->__('Delete Banner'));
 
         $this->_addButton('saveandcontinue', array(
-            'label' => Mage::helper('adminhtml')->__('Save And Continue Edit'),
-            'onclick' => 'saveAndContinueEdit()',
-            'class' => 'save',
-                ), -100);
+                'label' => Mage::helper('adminhtml')->__('Save And Continue Edit'),
+                'onclick' => 'saveAndContinueEdit()',
+                'class' => 'save',
+            ), -100);
 
         $this->_formScripts[] = "
             function saveAndContinueEdit(){
@@ -39,7 +41,8 @@ class Optimiseweb_Banners_Block_Adminhtml_Banners_Edit extends Mage_Adminhtml_Bl
     /**
      *
      */
-    protected function _prepareLayout() {
+    protected function _prepareLayout()
+    {
         parent::_prepareLayout();
         if (Mage::getSingleton('cms/wysiwyg_config')->isEnabled()) {
             $this->getLayout()->getBlock('head')->setCanLoadTinyMce(true);
@@ -50,7 +53,8 @@ class Optimiseweb_Banners_Block_Adminhtml_Banners_Edit extends Mage_Adminhtml_Bl
      *
      * @return type
      */
-    public function getHeaderText() {
+    public function getHeaderText()
+    {
         if (Mage::registry('banners_data') && Mage::registry('banners_data')->getId()) {
             return Mage::helper('banners')->__('Edit Banner');
         } else {

@@ -3,7 +3,7 @@
 /**
 * @package    Optimiseweb_Banners
 * @author     Kathir Vel (sid@optimiseweb.co.uk)
-* @copyright  Copyright (c) 2013 Optimiseweb Ltd
+* @copyright  Copyright (c) 2014 Optimise Web
 * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
 */
 -->
@@ -17,6 +17,7 @@
     </tabs>
 
     <sections>
+        
         <optimisewebbanners translate="label comment" module="banners">
             <label>Banners</label>
             <tab>optimisewebconfig</tab>
@@ -27,7 +28,7 @@
             <show_in_store>1</show_in_store>
             <groups>
 
-                <retina translate="label comment">
+                <retina translate="label comment" module="banners">
                     <label>Image for Retina Displays</label>
                     <frontend_type>text</frontend_type>
                     <sort_order>1</sort_order>
@@ -35,7 +36,7 @@
                     <show_in_website>1</show_in_website>
                     <show_in_store>1</show_in_store>
                     <fields>
-                        <enabled translate="label tooltip comment">
+                        <enabled translate="label tooltip comment" module="banners">
                             <label>Enable?</label>
                             <tooltip>Retina images can be uploaded, but the Banner output will not implement it.</tooltip>
                             <frontend_type>select</frontend_type>
@@ -45,7 +46,7 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </enabled>
-                        <dataattribute translate="label tooltip comment">
+                        <dataattribute translate="label tooltip comment" module="banners">
                             <label>Data Attribute</label>
                             <tooltip>Defaults to 'data-2x'.</tooltip>
                             <frontend_type>text</frontend_type>
@@ -59,5 +60,7 @@
 
             </groups>
         </optimisewebbanners>
+        
     </sections>
+    
 </config>
