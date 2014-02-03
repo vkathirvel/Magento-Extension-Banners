@@ -1,5 +1,5 @@
 <_>
-   <form_key>nHvF49oKLkOZyLsQ</form_key>
+   <form_key>Qbd6HnXHLx3ggdCt</form_key>
    <name>Optimiseweb_Banners</name>
    <channel>community</channel>
    <version_ids>
@@ -9,7 +9,7 @@
    <description>Optimiseweb_Banners</description>
    <license>Open Software License (OSL)</license>
    <license_uri>http://opensource.org/licenses/osl-3.0.php</license_uri>
-   <version>0.2.1</version>
+   <version>0.2.2</version>
    <stability>stable</stability>
    <notes>Cleanup</notes>
    <authors>
@@ -40,7 +40,7 @@
             <max/>
          </max>
          <files>
-            <files>                          </files>
+            <files>                           </files>
          </files>
       </package>
       <extension>
@@ -61,26 +61,31 @@
          <target>magecommunity</target>
          <target>mageetc</target>
          <target>magedesign</target>
+         <target>magelocale</target>
       </target>
       <path>
          <path/>
          <path>Optimiseweb/Banners</path>
          <path>modules/Optimiseweb_Banners.xml</path>
          <path>frontend/base/default/template/optimiseweb/banners</path>
+         <path>en_US/Optimiseweb_Banners.csv</path>
       </path>
       <type>
          <type>file</type>
          <type>dir</type>
          <type>file</type>
          <type>dir</type>
+         <type>file</type>
       </type>
       <include>
          <include/>
          <include/>
          <include/>
          <include/>
+         <include/>
       </include>
       <ignore>
+         <ignore/>
          <ignore/>
          <ignore/>
          <ignore/>

@@ -8,10 +8,10 @@
 */
 -->
 <config>
-  <modules>
-    <Optimiseweb_Banners>
-      <active>true</active>
-      <codePool>community</codePool>
-    </Optimiseweb_Banners>
-  </modules>
+    <modules>
+        <Optimiseweb_Banners>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Optimiseweb_Banners>
+    </modules>
 </config>
