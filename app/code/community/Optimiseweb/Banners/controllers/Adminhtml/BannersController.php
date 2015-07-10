@@ -4,8 +4,8 @@
  * Optimiseweb Banners Adminhtml Banners Controller
  *
  * @package     Optimiseweb_Banners
- * @author      Kathir Vel (sid@optimiseweb.co.uk)
- * @copyright   Copyright (c) 2014 Optimise Web
+ * @author      Kathir Vel (vkathirvel@gmail.com)
+ * @copyright   Copyright (c) 2015 Kathir Vel
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Controller_Action
@@ -281,7 +281,8 @@ class Optimiseweb_Banners_Adminhtml_BannersController extends Mage_Adminhtml_Con
     /**
      * Send Upload Response
      */
-    protected function _sendUploadResponse($fileName, $content, $contentType = 'application/octet-stream')
+    protected function _sendUploadResponse($fileName, $content,
+                                           $contentType = 'application/octet-stream')
     {
         $response = $this->getResponse();
         $response->setHeader('HTTP/1.1 200 OK', '');

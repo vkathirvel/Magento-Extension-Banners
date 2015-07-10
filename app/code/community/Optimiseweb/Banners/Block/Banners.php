@@ -4,8 +4,8 @@
  * Optimiseweb Banners Block Banners
  *
  * @package     Optimiseweb_Banners
- * @author      Kathir Vel (sid@optimiseweb.co.uk)
- * @copyright   Copyright (c) 2014 Optimise Web
+ * @author      Kathir Vel (vkathirvel@gmail.com)
+ * @copyright   Copyright (c) 2015 Kathir Vel
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Optimiseweb_Banners_Block_Banners extends Mage_Core_Block_Template
@@ -55,7 +55,11 @@ class Optimiseweb_Banners_Block_Banners extends Mage_Core_Block_Template
      * @param type $contentClass
      * @return type
      */
-    public function getGenericDivHtml($identifier, $containerID = NULL, $containerClass = NULL, $itemClass = NULL, $imageClass = NULL, $linkClass = NULL, $imageLinkContainerClass = NULL, $headingClass = NULL, $contentClass = NULL)
+    public function getGenericDivHtml($identifier, $containerID = NULL,
+                                      $containerClass = NULL, $itemClass = NULL,
+                                      $imageClass = NULL, $linkClass = NULL,
+                                      $imageLinkContainerClass = NULL,
+                                      $headingClass = NULL, $contentClass = NULL)
     {
         return Mage::helper('banners')->getGenericDivHtml($identifier, $containerID, $containerClass, $itemClass, $imageClass, $linkClass, $imageLinkContainerClass, $headingClass, $contentClass);
     }
@@ -67,7 +71,8 @@ class Optimiseweb_Banners_Block_Banners extends Mage_Core_Block_Template
      * @param type $containerClass
      * @return type
      */
-    public function getSlideJsHtml($identifier, $containerId = NULL, $containerClass = NULL)
+    public function getSlideJsHtml($identifier, $containerId = NULL,
+                                   $containerClass = NULL)
     {
         return Mage::helper('banners')->getSlideJsHtml($identifier, $containerId, $containerClass);
     }
@@ -80,7 +85,8 @@ class Optimiseweb_Banners_Block_Banners extends Mage_Core_Block_Template
      * @param type $liClass
      * @return type
      */
-    public function getJcarouselHtml($identifier, $containerId = NULL, $containerClass = NULL, $liClass = NULL)
+    public function getJcarouselHtml($identifier, $containerId = NULL,
+                                     $containerClass = NULL, $liClass = NULL)
     {
         return Mage::helper('banners')->getJcarouselHtml($identifier, $containerId, $containerClass, $liClass);
     }
@@ -102,7 +108,8 @@ class Optimiseweb_Banners_Block_Banners extends Mage_Core_Block_Template
      * @param type $containerClass
      * @return type
      */
-    public function getBxSliderHtml($identifier, $sliderClass = NULL, $containerClass = NULL)
+    public function getBxSliderHtml($identifier, $sliderClass = NULL,
+                                    $containerClass = NULL)
     {
         return Mage::helper('banners')->getBxSliderHtml($identifier, $sliderClass, $containerClass);
     }

@@ -4,8 +4,8 @@
  * Optimiseweb Banners Helper Data
  *
  * @package     Optimiseweb_Banners
- * @author      Kathir Vel (sid@optimiseweb.co.uk)
- * @copyright   Copyright (c) 2014 Optimise Web
+ * @author      Kathir Vel (vkathirvel@gmail.com)
+ * @copyright   Copyright (c) 2015 Kathir Vel
  * @license     http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
  */
 class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract
@@ -84,7 +84,7 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract
         $startDate = strtotime($startDate);
         $endDate = strtotime($endDate);
 
-        if (($today >= $startDate) AND ($today <= $endDate)) {
+        if (($today >= $startDate) AND ( $today <= $endDate)) {
             return TRUE;
         }
         return FALSE;
@@ -159,7 +159,11 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract
      * @param type $contentClass
      * @return string|boolean
      */
-    public function getGenericDivHtml($identifier, $containerID = NULL, $containerClass = NULL, $itemClass = NULL, $imageClass = NULL, $linkClass = NULL, $imageLinkContainerClass = NULL, $headingClass = NULL, $contentClass = NULL)
+    public function getGenericDivHtml($identifier, $containerID = NULL,
+                                      $containerClass = NULL, $itemClass = NULL,
+                                      $imageClass = NULL, $linkClass = NULL,
+                                      $imageLinkContainerClass = NULL,
+                                      $headingClass = NULL, $contentClass = NULL)
     {
         $banners = $this->getBanners($identifier);
         if ($banners) {
@@ -266,7 +270,8 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract
      * @param type $containerClass
      * @return string|boolean
      */
-    public function getSlideJsHtml($identifier, $containerId = NULL, $containerClass = NULL)
+    public function getSlideJsHtml($identifier, $containerId = NULL,
+                                   $containerClass = NULL)
     {
         $banners = $this->getBanners($identifier);
         if ($banners) {
@@ -332,7 +337,8 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract
      * @param type $liClass
      * @return string|boolean
      */
-    public function getJcarouselHtml($identifier, $containerId = NULL, $containerClass = NULL, $liClass = NULL)
+    public function getJcarouselHtml($identifier, $containerId = NULL,
+                                     $containerClass = NULL, $liClass = NULL)
     {
         $banners = $this->getBanners($identifier);
         if ($banners) {
@@ -458,7 +464,8 @@ class Optimiseweb_Banners_Helper_Data extends Mage_Core_Helper_Abstract
      * @param string $containerClass
      * @return string|boolean
      */
-    public function getBxSliderHtml($identifier, $sliderClass = NULL, $containerClass = NULL)
+    public function getBxSliderHtml($identifier, $sliderClass = NULL,
+                                    $containerClass = NULL)
     {
         $banners = $this->getBanners($identifier);
         if ($banners) {
